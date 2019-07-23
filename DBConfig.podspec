@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 s.name              = "DBConfig"
 
 #更新代码必须修改版本号
-s.version           = "1.0.0"
+s.version           = "1.0.1"
 s.summary           = "It is a DBConfig used on iOS, which implement by Objective-C"
 s.description       = <<-DESC
 It is a DBConfig used on iOS, which implement by Objective-C.
@@ -18,7 +18,7 @@ s.platform          = :ios, '7.0'
 s.requires_arc = true
 
 #source_files路径是相对podspec文件的路径
-s.source_files = 'DBConfig/*.h'
+s.source_files = 'DBConfig/*.{h,m}'
 s.public_header_files = 'DBConfig/*.h'
 s.frameworks = 'Foundation', 'UIKit'
 s.dependency 'LKDBHelper', '2.3.1'

@@ -7,8 +7,7 @@
 //
 
 #import "DBConfig.h"
-#import "LKDBUtils.h"
-
+#import "LKDBHelper.h"
 @interface DBConfig ()
 @property (nonatomic)      DBMode           dbMode;//数据库代码
 @property (nonatomic)      GlIpType         ipType;//接口代码
@@ -47,7 +46,7 @@
 
 //切换数据库环境
 - (void)switchDBByDBMode:(DBMode)dbMode {
-    [USER_DEFAULT setInteger:dbMode forKey:@"dbMode"];
+    [[NSUserDefaults standardUserDefaults] setInteger:dbMode forKey:@"dbMode"];
     _dbMode = dbMode;
     NSString *dbName = [NSString stringWithFormat:@"%@_DB.db",self.dbModeName];
     [[NSObject getUsingLKDBHelper] setDBName:dbName];
@@ -98,14 +97,14 @@
 
 - (GlIpType)ipType {
     if (_ipType ==0) {
-        _ipType = [[USER_DEFAULT objectForKey:@"GlIPType"] integerValue];
+        _ipType = [[[NSUserDefaults standardUserDefaults] objectForKey:@"GlIPType"] integerValue];
         if (_ipType==0) {
             if (self.dbMode == DBModeDis) {
                 _ipType = IpTypeDis;
-                [USER_DEFAULT setValue:@(IpTypeDis) forKey:@"GlIPType"];
+                [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
             }else {
                 _ipType = IpTypeTest;
-                [USER_DEFAULT setValue:@(IpTypeTest) forKey:@"GlIPType"];
+                [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeTest) forKey:@"GlIPType"];
             }
         }
     }
