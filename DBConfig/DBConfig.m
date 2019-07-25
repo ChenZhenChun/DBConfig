@@ -30,14 +30,15 @@
     self = [super init];
     if (self) {
         NSInteger dbMode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"dbMode"] integerValue];
-#ifdef RELEASE
-        dbMode = DBModeDis;
-        [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
-#else
+#ifdef DEBUG
         //DEBUG版本默认是测试库
         if (dbMode == 0) {
             dbMode = DBModeTest;
         }
+#else
+        dbMode = DBModeDis;
+        [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
+        
 #endif
         [self switchDBByDBMode:dbMode];
     }
