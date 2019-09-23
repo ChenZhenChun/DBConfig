@@ -44,9 +44,15 @@ typedef NS_ENUM(NSUInteger,GlIpType) {
     
 };
 
-@interface DBConfig : NSObject
+typedef enum : NSUInteger {
+    Build_DB_Default,
+    Build_DB_Debug,
+    Build_DB_Release,
+} XMZJDBConfigBuildConfig;
 
+@interface DBConfig : NSObject
 + (DBConfig *)sharedInstance;
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig *)buildConfiguration;
 
 @property (nonatomic,readonly) DBMode           dbMode;//数据库代码
 @property (nonatomic,readonly) GlIpType         ipType;//接口代码

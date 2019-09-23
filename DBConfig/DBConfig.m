@@ -8,6 +8,8 @@
 
 #import "DBConfig.h"
 #import "LKDBHelper.h"
+static XMZJDBConfigBuildConfig buildConfig;
+
 @interface DBConfig ()
 @property (nonatomic)      DBMode           dbMode;//数据库代码
 @property (nonatomic)      GlIpType         ipType;//接口代码
@@ -16,6 +18,11 @@
 @end
 
 @implementation DBConfig
+
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig *)buildConfiguration {
+    buildConfig = buildConfiguration;
+    return [DBConfig sharedInstance];
+}
 
 + (DBConfig *)sharedInstance {
     static DBConfig *sharedInstance = nil;
@@ -26,20 +33,30 @@
     return sharedInstance;
 }
 
-- (instancetype)init {
+- (instancetype)init{
     self = [super init];
     if (self) {
         NSInteger dbMode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"dbMode"] integerValue];
+        if (buildConfig == Build_DB_Default) {
 #ifdef DEBUG
-        //DEBUG版本默认是测试库
-        if (dbMode == 0) {
-            dbMode = DBModeTest;
-        }
+            //DEBUG版本默认是测试库
+            if (dbMode == 0) {
+                dbMode = DBModeTest;
+            }
 #else
-        dbMode = DBModeDis;
-        [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
-        
+            dbMode = DBModeDis;
+            [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
+            
 #endif
+        }else if (buildConfig == Build_DB_Debug) {
+            //DEBUG版本默认是测试库
+            if (dbMode == 0) {
+                dbMode = DBModeTest;
+            }
+        }else {
+            dbMode = DBModeDis;
+            [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
+        }
         [self switchDBByDBMode:dbMode];
     }
     return self;
