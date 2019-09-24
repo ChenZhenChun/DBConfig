@@ -52,7 +52,7 @@ typedef enum : NSUInteger {
 
 @interface DBConfig : NSObject
 + (DBConfig *)sharedInstance;
-+ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig *)buildConfiguration;
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration;
 
 @property (nonatomic,readonly) DBMode           dbMode;//数据库代码
 @property (nonatomic,readonly) GlIpType         ipType;//接口代码

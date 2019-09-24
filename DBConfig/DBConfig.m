@@ -19,7 +19,7 @@ static XMZJDBConfigBuildConfig buildConfig;
 
 @implementation DBConfig
 
-+ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig *)buildConfiguration {
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration {
     buildConfig = buildConfiguration;
     return [DBConfig sharedInstance];
 }
