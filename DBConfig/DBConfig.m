@@ -84,6 +84,9 @@ static XMZJDBConfigBuildConfig buildConfig;
         case DBModeTest:
             _dbModeName = @"Test";
             break;
+        case DBModeDemo:
+            _dbModeName = @"Demo";
+            break;
         default:
             _dbModeName = @"Dis";
             break;
@@ -105,6 +108,9 @@ static XMZJDBConfigBuildConfig buildConfig;
             break;
         case IpTypeCustom:
             _ipTypeName = @"自定义";
+            break;
+        case IpTypeDemo:
+            _ipTypeName = @"演示库";
             break;
         default:
             _ipTypeName = @"正式库";

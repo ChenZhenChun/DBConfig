@@ -21,7 +21,11 @@ typedef NS_ENUM(NSUInteger,DBMode) {
     /**
      *  测试库
      */
-    DBModeTest = 3
+    DBModeTest = 3,
+    /**
+     *  演示库
+     */
+    DBModeDemo = 5
 };
 
 typedef NS_ENUM(NSUInteger,GlIpType) {
@@ -41,6 +45,10 @@ typedef NS_ENUM(NSUInteger,GlIpType) {
      *  自定义地址
      */
     IpTypeCustom = 4,
+    /**
+     *  演示库
+     */
+    IpTypeDemo = 5
     
 };
 
