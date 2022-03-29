@@ -62,6 +62,11 @@ typedef enum : NSUInteger {
 + (DBConfig *)sharedInstance;
 + (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration;
 
+/// 设置可切换库默认库
+/// @param defaultDBMode 默认库
++ (DBConfig *)sharedInstanceDefaultDBMode:(DBMode)defaultDBMode;
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration defaultDBMode:(DBMode)defaultDBMode;
+
 @property (nonatomic,readonly) DBMode           dbMode;//数据库代码
 @property (nonatomic,readonly) GlIpType         ipType;//接口代码
 @property (nonatomic,readonly) NSString         *dbModeName;//获取数据库名字

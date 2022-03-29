@@ -9,6 +9,7 @@
 #import "DBConfig.h"
 #import "LKDBHelper.h"
 static XMZJDBConfigBuildConfig buildConfig;
+static DBMode _defaultDBMode;
 
 @interface DBConfig ()
 @property (nonatomic)      DBMode           dbMode;//数据库代码
@@ -21,6 +22,17 @@ static XMZJDBConfigBuildConfig buildConfig;
 
 + (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration {
     buildConfig = buildConfiguration;
+    return [DBConfig sharedInstance];
+}
+
++ (DBConfig *)sharedInstanceDefaultDBMode:(DBMode)defaultDBMode {
+    _defaultDBMode = defaultDBMode;
+    return [DBConfig sharedInstance];
+}
+
++ (DBConfig *)sharedInstance:(XMZJDBConfigBuildConfig)buildConfiguration defaultDBMode:(DBMode)defaultDBMode {
+    buildConfig = buildConfiguration;
+    _defaultDBMode = defaultDBMode;
     return [DBConfig sharedInstance];
 }
 
@@ -41,7 +53,11 @@ static XMZJDBConfigBuildConfig buildConfig;
 #ifdef DEBUG
             //DEBUG版本默认是测试库
             if (dbMode == 0) {
-                dbMode = DBModeTest;
+                if (_defaultDBMode == 0) {
+                    dbMode = DBModeTest;
+                }else {
+                    dbMode = _defaultDBMode;
+                }
             }
 #else
             dbMode = DBModeDis;
@@ -51,7 +67,11 @@ static XMZJDBConfigBuildConfig buildConfig;
         }else if (buildConfig == Build_DB_Debug) {
             //DEBUG版本默认是测试库
             if (dbMode == 0) {
-                dbMode = DBModeTest;
+                if (_defaultDBMode == 0) {
+                    dbMode = DBModeTest;
+                }else {
+                    dbMode = _defaultDBMode;
+                }
             }
         }else {
             dbMode = DBModeDis;
@@ -126,9 +146,15 @@ static XMZJDBConfigBuildConfig buildConfig;
             if (self.dbMode == DBModeDis) {
                 _ipType = IpTypeDis;
                 [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDis) forKey:@"GlIPType"];
-            }else {
+            }else if (self.dbMode == DBModeTest) {
                 _ipType = IpTypeTest;
                 [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeTest) forKey:@"GlIPType"];
+            }else if (self.dbMode == DBModeDemo) {
+                _ipType = IpTypeDemo;
+                [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDemo) forKey:@"GlIPType"];
+            }else {
+                _ipType = IpTypeDev;
+                [[NSUserDefaults standardUserDefaults] setValue:@(IpTypeDev) forKey:@"GlIPType"];
             }
         }
     }
